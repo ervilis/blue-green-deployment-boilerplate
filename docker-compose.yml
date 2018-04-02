@@ -9,7 +9,6 @@ services:
     build: .
     command: gunicorn src.myproject.wsgi:application -b 0.0.0.0:8000
     volumes:
-      - .:/code
       - web-static:/app/staticfiles
       - web-media:/app/media
     depends_on:
