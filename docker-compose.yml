@@ -19,12 +19,21 @@ services:
       - ./etc/nginx.conf:/etc/nginx/conf.d/default.conf
       - web-static:/usr/share/nginx/html/static
       - web-media:/usr/share/nginx/html/media
+    labels:
+      - "traefik.backend=myproject"
+      - "traefik.frontend.rule=Host:myproject.local"
+      - "traefik.docker.network=traefik_webgateway"
+    networks:
+      - gateway
+      - default
     depends_on:
       - web
-    ports:
-      - "80:80"
-
 volumes:
   db-data:
   web-media:
   web-static:
+
+networks:
+  gateway:
+    external:
+      name: traefik_webgateway
